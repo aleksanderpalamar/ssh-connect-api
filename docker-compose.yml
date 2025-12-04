@@ -1,0 +1,39 @@
+version: "3.8"
+
+services:
+  redis:
+    image: redis:7-alpine
+    container_name: ssh_connect_api_redis
+    restart: unless-stopped
+    networks:
+      - stability-net
+    volumes:
+      - redis-data:/data
+
+  api:
+    build: .
+    container_name: ssh_connect_api
+    restart: unless-stopped
+    env_file:
+      - .env
+    environment:
+      - REDIS_URL=redis://redis:6379
+      - PORT=3000
+    volumes:
+      - ./src:/app/src
+      - ./package.json:/app/package.json
+      - ./package-lock.json:/app/package-lock.json
+      - ./tsconfig.json:/app/tsconfig.json
+    ports:
+      - "3000:3000"
+    depends_on:
+      - redis
+    networks:
+      - stability-net
+
+volumes:
+  redis-data:
+
+networks:
+  stability-net:
+    driver: bridge
