@@ -16,7 +16,7 @@ This API works as a **Gateway** between your custom GPT and SSH servers. When yo
 - Execute commands securely with full audit trail
 - Analyze logs, performance, and system stability
 
-```
+```bash
 ┌─────────────────┐     ┌──────────────────┐     ┌─────────────────┐
 │   Custom GPT    │────▶│  SSH Connect API │────▶│   SSH Server    │
 │   (ChatGPT)     │◀────│    (Gateway)     │◀────│    (Target)     │
